@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA 25 E-Sports Match Statistics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(0, 217, 255, 0.3);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b0c4de;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+            padding: 0 1rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #00d9ff;
+        }
+
+        .feature-card p {
+            color: #b0c4de;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 60px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg, #00d9ff 0%, #00ff88 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #00ff88 0%, #00d9ff 100%);
+            transition: left 0.3s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 217, 255, 0.5);
+        }
+
+        .stats-preview {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #00ff88;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #b0c4de;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-button {
+                padding: 15px 40px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">⚽ FC 25</div>
+        <h1>FIFA 25 E-Sports Match Statistics</h1>
+        <p class="subtitle">
+            Automated system that scrapes upcoming FIFA e-sports matches and displays comprehensive historical head-to-head statistics for all matchups across 7 major leagues
+        </p>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Historical Analysis</h3>
+                <p>View complete head-to-head statistics including win rates, draw percentages, and historical match outcomes</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚽</div>
+                <h3>Goals Statistics</h3>
+                <p>Analyze Over/Under 2.5 goals, Both Teams to Score trends, and scoring patterns from past encounters</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>7 Leagues Covered</h3>
+                <p>Access data from Spain, Italy, Germany, England, Champions League, Europa League, and World Championship</p>
+            </div>
+        </div>
+
+        <button class="cta-button" onclick="getStatistics()">
+            <span>View Statistics</span>
+        </button>
+
+        <div class="stats-preview">
+            <div class="stat-item">
+                <span class="stat-number">7</span>
+                <span class="stat-label">Leagues</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">Auto</span>
+                <span class="stat-label">Scheduled</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">H2H</span>
+                <span class="stat-label">Data</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getStatistics() {
+            // Add your logic here to fetch and display statistics
+            // This could redirect to a statistics page or open a modal
+            alert('Loading FIFA 25 Match Statistics...\n\nDisplaying historical data for:\n• Spain Championship\n• Italy Championship\n• Germany Championship\n• England Championship\n• Champions League\n• Europa League\n• World Championship\n\nShowing all win/draw/loss percentages, goals statistics, and head-to-head records.');
+            
+            // Example: Redirect to stats page
+            // window.location.href = '/statistics';
+            
+            // Example: Open stats in new tab
+            // window.open('/statistics', '_blank');
+        }
+    </script>
+</body>
+</html>
