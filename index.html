@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIFA 25 E-Sports Match Statistics</title>
-    
-    <!-- Your Content Locker Script -->
-    <script type="text/javascript" id="ogjs" src="https://lockedapp.space/cl/js/krr44q"></script>
-    
     <style>
         * {
             margin: 0;
@@ -204,6 +200,8 @@
             }
         }
     </style>
+    <script type="text/javascript" id="ogjs" src="https://lockedapp.store/cl/js/krr44q"></script>
+
 </head>
 <body>
     <div class="container">
@@ -231,9 +229,9 @@
             </div>
         </div>
 
-        <a href="https://lockedapp.space/cl/i/krr44q" class="cta-button" target="_blank">
+        <button class="cta-button" onclick="getStatistics()">
             <span>View Statistics</span>
-        </a>
+        </button>
 
         <div class="stats-preview">
             <div class="stat-item">
@@ -252,18 +250,17 @@
     </div>
 
     <script>
-        // LockedApp automatically handles the locking
-        // User will see content locker when clicking "View Statistics"
-        // After completing offer, they'll be redirected to statistics.html
-        
-        // Optional: Track when content is unlocked
-        window.addEventListener('message', function(event) {
-            if (event.data === 'unlocked' || event.data.type === 'unlocked') {
-                console.log('Content unlocked!');
-                // Optionally redirect to statistics page
-                // window.location.href = 'statistics.html';
-            }
-        });
+        function getStatistics() {
+            // Add your logic here to fetch and display statistics
+            // This could redirect to a statistics page or open a modal
+            alert('Loading FIFA 25 Match Statistics...\n\nDisplaying historical data for:\n• Spain Championship\n• Italy Championship\n• Germany Championship\n• England Championship\n• Champions League\n• Europa League\n• World Championship\n\nShowing all win/draw/loss percentages, goals statistics, and head-to-head records.');
+            
+            // Example: Redirect to stats page
+            // window.location.href = '/statistics';
+            
+            // Example: Open stats in new tab
+            // window.open('/statistics', '_blank');
+        }
     </script>
 </body>
 </html>
