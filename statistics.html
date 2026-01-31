@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA 25 Match Statistics</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #00d9ff, #00ff88);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: #b0c4de;
+            font-size: 1.1rem;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: linear-gradient(135deg, #00d9ff, #00ff88);
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .matches-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .match-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .match-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .league-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(0, 217, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #00d9ff;
+        }
+
+        .match-time {
+            color: #00ff88;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .teams {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .teams h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #00d9ff;
+        }
+
+        .vs {
+            color: #b0c4de;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 3px solid #00d9ff;
+        }
+
+        .stat-label {
+            color: #b0c4de;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .stat-value.high {
+            color: #00ff88;
+        }
+
+        .stat-value.medium {
+            color: #ffd700;
+        }
+
+        .stat-value.low {
+            color: #ff6b6b;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .historical-data {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .historical-data h4 {
+            color: #00d9ff;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .historical-data p {
+            color: #b0c4de;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .match-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back to Home</a>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">⚽ FC 25</div>
+            <h1>Match Statistics</h1>
+            <p class="subtitle">Historical head-to-head analysis for upcoming matches</p>
+        </div>
+
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterLeague('all')">All Leagues</button>
+            <button class="filter-btn" onclick="filterLeague('spain')">Spain</button>
+            <button class="filter-btn" onclick="filterLeague('italy')">Italy</button>
+            <button class="filter-btn" onclick="filterLeague('england')">England</button>
+            <button class="filter-btn" onclick="filterLeague('germany')">Germany</button>
+            <button class="filter-btn" onclick="filterLeague('cl')">Champions League</button>
+            <button class="filter-btn" onclick="filterLeague('el')">Europa League</button>
+        </div>
+
+        <div class="matches-grid" id="matchesGrid">
+            <!-- Match cards will be generated here -->
+        </div>
+    </div>
+
+    <script>
+        // Sample match data (replace with your actual data from Python script)
+        const matches = [
+            {
+                league: 'spain',
+                leagueName: 'Spain Championship',
+                time: '03:35',
+                team1: 'Valencia',
+                team2: 'Celta',
+                stats: {
+                    team1Win: 45.2,
+                    team2Win: 32.4,
+                    draw: 22.4,
+                    over25: 58.3,
+                    under25: 41.7,
+                    bttsYes: 62.1,
+                    bttsNo: 37.9,
+                    team1OrDraw: 88.0,
+                    team2OrDraw: 54.8
+                },
+                historical: '25 previous matches analyzed from historical database'
+            },
+            {
+                league: 'cl',
+                leagueName: 'Champions League',
+                time: '08:03',
+                team1: 'Atletico Madrid',
+                team2: 'Sporting CP',
+                stats: {
+                    team1Win: 52.4,
+                    team2Win: 28.6,
+                    draw: 19.0,
+                    over25: 69.0,
+                    under25: 31.0,
+                    bttsYes: 64.3,
+                    bttsNo: 35.7,
+                    team1OrDraw: 71.4,
+                    team2OrDraw: 47.6
+                },
+                historical: '42 previous matches analyzed from historical database'
+            },
+            {
+                league: 'england',
+                leagueName: 'England Championship',
+                time: '12:52',
+                team1: 'Brighton',
+                team2: 'Southampton',
+                stats: {
+                    team1Win: 47.1,
+                    team2Win: 29.4,
+                    draw: 23.5,
+                    over25: 70.6,
+                    under25: 29.4,
+                    bttsYes: 76.5,
+                    bttsNo: 23.5,
+                    team1OrDraw: 70.6,
+                    team2OrDraw: 52.9
+                },
+                historical: '34 previous matches analyzed from historical database'
+            },
+            {
+                league: 'italy',
+                leagueName: 'Italy Championship',
+                time: '18:24',
+                team1: 'Torino',
+                team2: 'Bologna',
+                stats: {
+                    team1Win: 39.3,
+                    team2Win: 42.9,
+                    draw: 17.8,
+                    over25: 67.9,
+                    under25: 32.1,
+                    bttsYes: 69.6,
+                    bttsNo: 30.4,
+                    team1OrDraw: 57.1,
+                    team2OrDraw: 60.7
+                },
+                historical: '56 previous matches analyzed from historical database'
+            },
+            {
+                league: 'germany',
+                leagueName: 'Germany Championship',
+                time: '28:14',
+                team1: 'St. Pauli',
+                team2: 'Mainz 05',
+                stats: {
+                    team1Win: 40.0,
+                    team2Win: 37.1,
+                    draw: 22.9,
+                    over25: 77.1,
+                    under25: 22.9,
+                    bttsYes: 77.1,
+                    bttsNo: 22.9,
+                    team1OrDraw: 62.9,
+                    team2OrDraw: 60.0
+                },
+                historical: '35 previous matches analyzed from historical database'
+            },
+            {
+                league: 'el',
+                leagueName: 'Europa League',
+                time: '52:43',
+                team1: 'Athletic Bilbao',
+                team2: 'Porto',
+                stats: {
+                    team1Win: 45.0,
+                    team2Win: 25.0,
+                    draw: 30.0,
+                    over25: 55.0,
+                    under25: 45.0,
+                    bttsYes: 70.0,
+                    bttsNo: 30.0,
+                    team1OrDraw: 75.0,
+                    team2OrDraw: 55.0
+                },
+                historical: '20 previous matches analyzed from historical database'
+            }
+        ];
+
+        function getStatClass(value) {
+            if (value >= 65) return 'high';
+            if (value >= 45) return 'medium';
+            return 'low';
+        }
+
+        function createMatchCard(match) {
+            return `
+                <div class="match-card" data-league="${match.league}">
+                    <div class="match-header">
+                        <span class="league-badge">${match.leagueName}</span>
+                        <span class="match-time">⏰ Starts in: ${match.time}</span>
+                    </div>
+                    
+                    <div class="teams">
+                        <h2>${match.team1}</h2>
+                        <div class="vs">VS</div>
+                        <h2>${match.team2}</h2>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <div class="stat-label">${match.team1} Win</div>
+                            <div class="stat-value ${getStatClass(match.stats.team1Win)}">${match.stats.team1Win}%</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Draw</div>
+                            <div class="stat-value ${getStatClass(match.stats.draw)}">${match.stats.draw}%</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">${match.team2} Win</div>
+                            <div class="stat-value ${getStatClass(match.stats.team2Win)}">${match.stats.team2Win}%</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Over 2.5 Goals</div>
+                            <div class="stat-value ${getStatClass(match.stats.over25)}">${match.stats.over25}%</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Under 2.5 Goals</div>
+                            <div class="stat-value ${getStatClass(match.stats.under25)}">${match.stats.under25}%</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">BTTS YES</div>
+                            <div class="stat-value ${getStatClass(match.stats.bttsYes)}">${match.stats.bttsYes}%</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">${match.team1} or Draw</div>
+                            <div class="stat-value ${getStatClass(match.stats.team1OrDraw)}">${match.stats.team1OrDraw}%</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">${match.team2} or Draw</div>
+                            <div class="stat-value ${getStatClass(match.stats.team2OrDraw)}">${match.stats.team2OrDraw}%</div>
+                        </div>
+                    </div>
+
+                    <div class="historical-data">
+                        <h4>📊 Historical Data</h4>
+                        <p>${match.historical}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderMatches(filter = 'all') {
+            const grid = document.getElementById('matchesGrid');
+            const filteredMatches = filter === 'all' 
+                ? matches 
+                : matches.filter(m => m.league === filter);
+            
+            grid.innerHTML = filteredMatches.map(createMatchCard).join('');
+        }
+
+        function filterLeague(league) {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Render filtered matches
+            renderMatches(league);
+        }
+
+        // Initial render
+        renderMatches();
+    </script>
+</body>
+</html>
